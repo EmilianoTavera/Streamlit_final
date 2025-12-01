@@ -9,3 +9,4 @@ seaborn
 plotly
 requests
 geopandas
+nest_asyncio
