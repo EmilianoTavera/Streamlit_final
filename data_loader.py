@@ -98,7 +98,8 @@ def load_predict():
     """
     try:
         # 1. Cargar GeoJSON de Alcaldías
-        gdf = gpd.read_file(URL_GEOJSON)
+        RUTA_GEOJSON_LOCAL = "limite-de-las-alcaldias.json"
+        gdf = gpd.read_file(RUTA_GEOJSON_LOCAL)
 
         # 2. Cargar CSV de Predicciones
         # Si no tienes el archivo real, crea un DataFrame vacío para que no rompa la app
