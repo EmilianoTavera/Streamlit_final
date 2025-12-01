@@ -10,3 +10,4 @@ plotly
 requests
 geopandas
 nest_asyncio
+googletrans
