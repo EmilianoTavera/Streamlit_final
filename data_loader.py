@@ -32,31 +32,44 @@ def load_cluster_data(path="resultados_cluster.csv"):#
 
 
 @st.cache_data(show_spinner=False)
-def load_map_data():
-    """Carga los datos de incidentes y los límites GeoJSON de la CDMX.
-    MODIFICADO: Usa el archivo local 'limite-de-las-alcaldias.geojson' en lugar de la URL externa para evitar errores de conexión.
+def load_map_data(zip_path="mapa_procesado.zip", csv_filename="mapa_procesado.csv"):#
     """
-    
-    # 1️ Cargar Datos de incidentes (ASUME que la variable 'df' se carga aquí)
-    # *** REEMPLAZA ESTA LÍNEA CON TU LÓGICA DE CARGA DE DATOS DE INCIDENTES (si no lo hace otra función) ***
-    df = None 
-    
-    # 2️ Cargar GeoJSON desde el repositorio local
-    # IMPORTANTE: Ya que tu archivo está en el repositorio, lo cargaremos directamente. 
-    # Asegúrate de usar el nombre correcto. Lo cambié a .geojson para compatibilidad, 
-    # pero si es .json úsalo.
-    RUTA_GEOJSON_LOCAL = "limite-de-las-alcaldias.json" 
-    
+    Carga los datos del mapa desde un archivo ZIP.
+    Asume que el archivo CSV está dentro del ZIP.
+    """
+    df = pd.DataFrame()
+
     try:
-        # Cargar el GeoJSON directamente desde el archivo local
-        gdf = gpd.read_file(RUTA_GEOJSON_LOCAL)
-        
+        # 1️ Abrir y leer el archivo CSV dentro del ZIP
+        with zipfile.ZipFile(zip_path, 'r') as z:
+            # Leer el contenido del CSV en memoria
+            with z.open(csv_filename) as f:
+                # Usar io.BytesIO para que pd.read_csv pueda leer el archivo directamente
+                df = pd.read_csv(io.BytesIO(f.read()))
+
+    except FileNotFoundError:
+        st.error(f"Error: El archivo ZIP '{zip_path}' no se encontró.")
+        return pd.DataFrame(), None
+    except KeyError:
+        st.error(f"Error: El archivo CSV '{csv_filename}' no se encontró dentro del ZIP.")
+        return pd.DataFrame(), None
     except Exception as e:
-        # Capturar errores si el archivo local no se encuentra (FileNotFoundError)
-        st.error(f"Error al cargar el GeoJSON local '{RUTA_GEOJSON_LOCAL}'. Asegúrate de que el archivo exista en la raíz del repositorio. Detalle: {e}")
-        return df, None # Retorna None para el GDF
-        
-    # Retorna tus datos de incidentes (df) y los límites geográficos (gdf)
+        st.error(f"Error al cargar o descomprimir los datos del mapa: {e}")
+        return pd.DataFrame(), None
+
+    # Limpieza básica de columnas
+    df.columns = [c.strip().lower().replace(' ', '_') for c in df.columns]
+
+    # Asegurar binarios
+    for col in ['trabajo', 'centro', 'horario_laboral']:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0).astype(int)
+
+    # 2️ Cargar GeoJSON
+    RUTA_GEOJSON_LOCAL = "limite-de-las-alcaldias.json"
+    url_geojson = "https://datos.cdmx.gob.mx/dataset/bae265a8-d1f6-4614-b399-4184bc93e027/resource/deb5c583-84e2-4e07-a706-1b3a0dbc99b0/download/limite-de-las-alcaldas.json"
+    gdf = gpd.read_file(RUTA_GEOJSON_LOCAL)
+
     return df, gdf
 
 
