@@ -3,11 +3,10 @@ pandas
 numpy
 scikit-learn
 nltk
-googletrans==4.0.0-rc1
+googletrans==3.1.0a0
 matplotlib
 seaborn
 plotly
 requests
 geopandas
 nest_asyncio
-googletrans
