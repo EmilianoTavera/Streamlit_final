@@ -45,7 +45,7 @@ def load_map_data():
     # IMPORTANTE: Ya que tu archivo está en el repositorio, lo cargaremos directamente. 
     # Asegúrate de usar el nombre correcto. Lo cambié a .geojson para compatibilidad, 
     # pero si es .json úsalo.
-    RUTA_GEOJSON_LOCAL = "limite-de-las-alcaldias.geojson" 
+    RUTA_GEOJSON_LOCAL = "limite-de-las-alcaldias.json" 
     
     try:
         # Cargar el GeoJSON directamente desde el archivo local
