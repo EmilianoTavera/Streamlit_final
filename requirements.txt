@@ -11,3 +11,4 @@ requests
 geopandas
 nest_asyncio
 xgboost
+folium
