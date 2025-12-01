@@ -12,3 +12,4 @@ geopandas
 nest_asyncio
 xgboost
 folium
+st_folium
