@@ -21,7 +21,7 @@ IAM_URL = "https://iam.cloud.ibm.com/identity/token"
 CHAT_URL = "https://us-south.ml.cloud.ibm.com/ml/v1/text/chat?version=2023-05-29"
 
 # Parámetros del Modelo
-WATSONX_PROJECT_ID = "99db36de-05e8-4754-9d52-163c2ca83fad"
+WATSONX_PROJECT_ID = "54913fe6-a027-4c79-be2f-3953b91f422a"
 MODEL_ID = "ibm/granite-3-3-8b-instruct"
 
 # Contenido del Mensaje del Sistema (COMPLETO)
