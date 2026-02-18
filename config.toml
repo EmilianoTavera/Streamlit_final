@@ -1,6 +1,0 @@
-[theme]
-primaryColor = "#1096f1"        # Azul vibrante (botones, radio buttons, sliders)
-backgroundColor = "#0f0f1f"     # Fondo oscuro profundo
-secondaryBackgroundColor = "#1a1a2e" # Fondo de tarjetas/sidebar
-textColor = "#FFFFFF"           # Texto blanco puro
-font = "sans serif"             # Fuente base (Jost se aplica por CSS)
